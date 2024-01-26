@@ -1,0 +1,200 @@
+[gd_scene load_steps=20 format=3 uid="uid://db1uthkaxx8h7"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_nsht3"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="2_he2qo"]
+[ext_resource type="Script" path="res://scripts/steam.gd" id="2_s7ljs"]
+[ext_resource type="Shader" path="res://scripts/postproc.gdshader" id="3_brfmj"]
+[ext_resource type="Script" path="res://scripts/FlashlightControl.gd" id="4_08c7b"]
+[ext_resource type="Script" path="res://scripts/startUI.gd" id="5_iyfv0"]
+
+[sub_resource type="Curve" id="Curve_i3hnj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.28169, 0.326316), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ye6iy"]
+curve = SubResource("Curve_i3hnj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0w57q"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ye6iy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tgd1"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.113725)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vdahc"]
+material = SubResource("StandardMaterial3D_1tgd1")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kjnkm"]
+
+[sub_resource type="Gradient" id="Gradient_be4ux"]
+offsets = PackedFloat32Array(0.393443, 0.983607)
+colors = PackedColorArray(0.210685, 0.207559, 9.62615e-08, 1, 0.345788, 0.339449, 2.88785e-07, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_anher"]
+gradient = SubResource("Gradient_be4ux")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcw1s"]
+shader = ExtResource("3_brfmj")
+shader_parameter/pixel = 1.0
+shader_parameter/pallete = SubResource("GradientTexture2D_anher")
+
+[sub_resource type="Animation" id="Animation_uei6r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pd7q5"]
+resource_name = "turnoff"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(50, 0), Vector2(63, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_trruk"]
+resource_name = "turnon"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(63, 0), Vector2(50, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pf4oi"]
+_data = {
+"RESET": SubResource("Animation_uei6r"),
+"turnoff": SubResource("Animation_pd7q5"),
+"turnon": SubResource("Animation_trruk")
+}
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_nsht3")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head"]
+visible = false
+light_energy = 4.879
+light_volumetric_fog_energy = 1.324
+shadow_enabled = true
+distance_fade_enabled = true
+spot_range = 33.6205
+spot_angle = 31.6255
+
+[node name="RayCast3D" type="RayCast3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.387578)
+target_position = Vector3(0, -3, 0)
+collision_mask = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Head"]
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, -0.00258994, -0.355147, -0.670303)
+visibility_aabb = AABB(-0.3, -0.3, -0.3, 0.6, 0.6, 0.6)
+process_material = SubResource("ParticleProcessMaterial_0w57q")
+draw_pass_1 = SubResource("BoxMesh_vdahc")
+script = ExtResource("2_s7ljs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_kjnkm")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_he2qo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.384314)
+z_index = -565
+material = SubResource("ShaderMaterial_jcw1s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FlashLightSystem" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -252.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("4_08c7b")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/FlashLightSystem"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 126.0
+offset_bottom = 504.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.00449, 1.00449)
+value = 100.0
+fill_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/FlashLightSystem"]
+libraries = {
+"": SubResource("AnimationLibrary_pf4oi")
+}
+
+[node name="StartUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_iyfv0")
+
+[node name="Label" type="Label" parent="CanvasLayer/StartUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "WASD - Movement
+F - Flashlight
+"
+
+[node name="Timer" type="Timer" parent="CanvasLayer/StartUI"]
+wait_time = 4.0
+autostart = true
+
+[connection signal="timeout" from="CanvasLayer/StartUI/Timer" to="CanvasLayer/StartUI" method="_on_timer_timeout"]

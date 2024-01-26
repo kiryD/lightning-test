@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1kcspauhdjxb"]
+
+[ext_resource type="Script" path="res://scripts/door.gd" id="1_2ghnn"]
+[ext_resource type="PackedScene" uid="uid://dfpmqol451hrf" path="res://scenes/block.tscn" id="1_gbjjx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_s2h1p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0s5sh"]
+
+[node name="Door" type="Node3D"]
+script = ExtResource("1_2ghnn")
+
+[node name="Block" parent="." instance=ExtResource("1_gbjjx")]
+transform = Transform3D(0.5, 0, 0, 0, 4.5, 0, 0, 0, 0.6, 1, 2, 0)
+
+[node name="Block3" parent="." instance=ExtResource("1_gbjjx")]
+transform = Transform3D(2.5, 0, 0, 0, 0.45, 0, 0, 0, 0.6, 0, 4, 0)
+
+[node name="Block2" parent="." instance=ExtResource("1_gbjjx")]
+transform = Transform3D(0.5, 0, 0, 0, 4.5, 0, 0, 0, 0.6, -1, 2, 0)
+
+[node name="Joint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Block4" type="StaticBody3D" parent="Joint"]
+transform = Transform3D(1.475, 0, 0, 0, 3.762, 0, 0, 0, 0.3, -1, 1.9, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Joint/Block4"]
+mesh = SubResource("BoxMesh_s2h1p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Joint/Block4"]
+shape = SubResource("BoxShape3D_0s5sh")

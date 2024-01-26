@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://oaa2k7mum2rq"]
+
+[ext_resource type="PackedScene" uid="uid://bt7n6bcpb17cy" path="res://scenes/lightessential.glb" id="1_51rbg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4ha0"]
+emission_enabled = true
+emission = Color(1, 1, 0.231373, 1)
+emission_energy_multiplier = 39.55
+rim_enabled = true
+rim_tint = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tnvkr"]
+material = SubResource("StandardMaterial3D_r4ha0")
+height = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_xflu0"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pk73v"]
+
+[node name="Light" type="Node3D"]
+
+[node name="RigidBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.13124, 0)
+
+[node name="lightessential" parent="RigidBody3D" instance=ExtResource("1_51rbg")]
+transform = Transform3D(0.336215, 0, 0, 0, 0.58482, 0, 0, 0, 0.336215, 0, -0.116217, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="RigidBody3D"]
+transform = Transform3D(0.666667, 0, 0, 0, -2.91409e-08, 0.666667, 0, -0.666667, -2.91409e-08, 0, -0.0326128, 0)
+spot_range = 4096.0
+spot_angle = 44.86
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.144, 0, 0, 0, 0.15, 0, 0.0155177, 0)
+mesh = SubResource("CapsuleMesh_tnvkr")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.144, 0, 0, 0, 0.15, 0, 0.114942, 0)
+mesh = SubResource("BoxMesh_xflu0")
+
+[node name="RigidBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.833333, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
+transform = Transform3D(0.1, 0, 0, 0, 0.5376, 0, 0, 0, 0.1, 0, 0.3, 0)
+mesh = SubResource("CylinderMesh_pk73v")
+skeleton = NodePath("../../RigidBody3D")
