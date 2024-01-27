@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://db1uthkaxx8h7"]
+[gd_scene load_steps=21 format=3 uid="uid://db1uthkaxx8h7"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_nsht3"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="2_he2qo"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://scripts/postproc.gdshader" id="3_brfmj"]
 [ext_resource type="Script" path="res://scripts/FlashlightControl.gd" id="4_08c7b"]
 [ext_resource type="Script" path="res://scripts/startUI.gd" id="5_iyfv0"]
+[ext_resource type="AudioStream" uid="uid://ccu2ohabyqpjf" path="res://FIGHTER_SNARE_2.wav" id="7_7q5ne"]
 
 [sub_resource type="Curve" id="Curve_i3hnj"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.28169, 0.326316), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -109,9 +110,10 @@ spot_range = 33.6205
 spot_angle = 31.6255
 
 [node name="RayCast3D" type="RayCast3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.387578)
-target_position = Vector3(0, -3, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.187578)
+target_position = Vector3(0, -2, 0)
 collision_mask = 2
+collide_with_areas = true
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Head"]
 transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, -0.00258994, -0.355147, -0.670303)
@@ -130,6 +132,7 @@ script = ExtResource("2_he2qo")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
 modulate = Color(1, 1, 1, 0.384314)
 z_index = -565
 material = SubResource("ShaderMaterial_jcw1s")
@@ -139,6 +142,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+z_index = -565
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="FlashLightSystem" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -162,7 +176,6 @@ offset_right = 126.0
 offset_bottom = 504.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.00449, 1.00449)
 value = 100.0
 fill_mode = 3
 
@@ -191,10 +204,18 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "WASD - Movement
 F - Flashlight
+Shift - Run
+E - Interact
 "
 
 [node name="Timer" type="Timer" parent="CanvasLayer/StartUI"]
 wait_time = 4.0
 autostart = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+stream = ExtResource("7_7q5ne")
+volume_db = -23.0
+pitch_scale = 3.25
 
 [connection signal="timeout" from="CanvasLayer/StartUI/Timer" to="CanvasLayer/StartUI" method="_on_timer_timeout"]

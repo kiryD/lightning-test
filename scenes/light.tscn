@@ -3,9 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bt7n6bcpb17cy" path="res://scenes/lightessential.glb" id="1_51rbg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4ha0"]
-emission_enabled = true
 emission = Color(1, 1, 0.231373, 1)
-emission_energy_multiplier = 39.55
+emission_energy_multiplier = 4.0
 rim_enabled = true
 rim_tint = 1.0
 
@@ -26,7 +25,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.13124, 0)
 transform = Transform3D(0.336215, 0, 0, 0, 0.58482, 0, 0, 0, 0.336215, 0, -0.116217, 0)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="RigidBody3D"]
-transform = Transform3D(0.666667, 0, 0, 0, -2.91409e-08, 0.666667, 0, -0.666667, -2.91409e-08, 0, -0.0326128, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37113e-08, 1, 0, -1, -4.37113e-08, 0, 0.113068, -4.94237e-09)
 spot_range = 4096.0
 spot_angle = 44.86
 
