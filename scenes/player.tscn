@@ -6,8 +6,8 @@
 [ext_resource type="Shader" path="res://scripts/postproc.gdshader" id="3_brfmj"]
 [ext_resource type="Script" path="res://scripts/FlashlightControl.gd" id="4_08c7b"]
 [ext_resource type="Script" path="res://scripts/startUI.gd" id="5_iyfv0"]
-[ext_resource type="AudioStream" uid="uid://ccu2ohabyqpjf" path="res://sounds/FIGHTER_SNARE_2.wav" id="7_7q5ne"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="7_xrkvk"]
+[ext_resource type="AudioStream" uid="uid://ccu2ohabyqpjf" path="res://sounds/FIGHTER_SNARE_2.wav" id="8_5hk2i"]
 
 [sub_resource type="Curve" id="Curve_i3hnj"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.28169, 0.326316), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -118,6 +118,7 @@ collide_with_areas = true
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Head"]
 transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, -0.00258994, -0.355147, -0.670303)
+emitting = false
 visibility_aabb = AABB(-0.3, -0.3, -0.3, 0.6, 0.6, 0.6)
 process_material = SubResource("ParticleProcessMaterial_0w57q")
 draw_pass_1 = SubResource("BoxMesh_vdahc")
@@ -145,7 +146,16 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
-modulate = Color(1, 1, 1, 0)
+z_index = -565
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer"]
 z_index = -565
 anchors_preset = 15
 anchor_right = 1.0
@@ -173,8 +183,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 630.0
-offset_bottom = 2520.0
+offset_right = 1449.0
+offset_bottom = 5796.0
 grow_horizontal = 2
 grow_vertical = 2
 value = 100.0
@@ -282,7 +292,7 @@ vertical_alignment = 1
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-stream = ExtResource("7_7q5ne")
+stream = ExtResource("8_5hk2i")
 volume_db = -23.0
 pitch_scale = 3.25
 

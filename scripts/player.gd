@@ -6,6 +6,7 @@ extends CharacterBody3D
 @export var JUMP_VELOCITY = 2.3
 @export_subgroup("Mouse")
 @export var mouseSensibility = 1200
+@export_category("Gameplay")
 @export_subgroup("Head bob")
 @export var head_start_pos = Vector3(0,1,0)
 @export var HEAD_BOB := true
@@ -16,6 +17,8 @@ extends CharacterBody3D
 @export var max_stamina = 100
 @export var mult_stamina = 25
 @export var between_stand_or_run = 7
+@export_subgroup("Flashlight")
+@export var have_flashlight = false
 var mouse_relative_x = 0
 var tick = 0
 var mouse_relative_y = 0
@@ -24,6 +27,7 @@ var step = true
 var exhaust
 var hinta
 var zoom
+var newfade = 1.0
 signal collide
 @onready var newfov = $Camera3D.fov
 @onready var last_speed = SPEED
@@ -31,11 +35,16 @@ signal collide
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+	fadeout()
+	if !have_flashlight:
+		$CanvasLayer/FlashLightSystem.statea = "Disabled"
+	else:
+		$CanvasLayer/FlashLightSystem.statea = "Enabled"
 func _physics_process(delta):
 	if $Head/RayCast3D.is_colliding():
 		emit_signal("collide")
 	fov_change(delta)
+	fade(newfade,delta)
 	if hinta:
 		$CanvasLayer/Hint/Label.modulate.a = lerp($CanvasLayer/Hint/Label.modulate.a,
 		 1.0, delta * 5)
@@ -54,6 +63,7 @@ func _physics_process(delta):
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		fadein()
 	#tick for head bob
 	tick += 1
 	#step and bob! sound
@@ -109,9 +119,9 @@ func _input(event):
 		var ray = $Head/RayCast3D
 		ray.get_collider().use()
 	#run conditio
-	if event.is_action_pressed("key_shift"):
+	if event.is_action_pressed("key_shift") and velocity:
 		run = true
-	if event.is_action_released("key_shift"):
+	if event.is_action_released("key_shift") or !velocity:
 		run = false
 	#smooth rotation of player(it just works)
 	if event is InputEventMouseMotion:
@@ -153,3 +163,11 @@ func dehint():
 	await get_tree().create_timer(0.3).timeout
 	$CanvasLayer/Hint/Label.text = ""
 	$CanvasLayer/Hint/Label2.text = ""
+func fade(a, delta):
+	$CanvasLayer/ColorRect3.modulate.a = lerp($CanvasLayer/ColorRect3.modulate.a, a, delta)
+func fadein():
+	newfade = 1.0
+func fadeout():
+	newfade = 0.0
+func flashlight_pickup():
+	$CanvasLayer/FlashLightSystem.statea = "Enabled"

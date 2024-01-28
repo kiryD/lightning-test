@@ -1,10 +1,13 @@
 extends Control
 #variables
-enum STATE{ON, OFF}
+enum STATE{ON, OFF, DISABLED}
 var state = STATE.OFF
 var stateb = false
+var statea: String
 func _input(event):
 	#get key
+	if statea == "Disabled":
+		return
 	if event.is_action_released("key_f"):
 		stateb = !stateb
 		if stateb:

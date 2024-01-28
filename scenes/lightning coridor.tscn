@@ -1,10 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbgunl0vska6y"]
+[gd_scene load_steps=15 format=3 uid="uid://dbgunl0vska6y"]
 
 [ext_resource type="PackedScene" uid="uid://db1uthkaxx8h7" path="res://scenes/player.tscn" id="1_64yhw"]
 [ext_resource type="PackedScene" uid="uid://oaa2k7mum2rq" path="res://scenes/light.tscn" id="2_b2xjv"]
 [ext_resource type="Texture2D" uid="uid://dqnkfe2s6usp" path="res://icons/grass.jpg" id="3_5cuj4"]
 [ext_resource type="PackedScene" uid="uid://ctt6mij40fsnf" path="res://scenes/double_door.tscn" id="4_qvboq"]
 [ext_resource type="PackedScene" uid="uid://cbbsbll0bs3ba" path="res://scenes/hint.tscn" id="5_jshty"]
+[ext_resource type="PackedScene" uid="uid://okgppx10yudd" path="res://teleport.tscn" id="6_kqqc6"]
+[ext_resource type="PackedScene" uid="uid://deqogkn03gf60" path="res://scenes/flashlight_pickup.tscn" id="7_art1k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6ay65"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -208,12 +210,19 @@ BottomText = "Your stamina is not the best"
 Reusable = false
 
 [node name="Hint2" parent="." instance=ExtResource("5_jshty")]
-transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 7.42644, 0.0116006, 2.03765, 14.4423)
+transform = Transform3D(2.32444, 0, 0, 0, 1, 0, 0, 0, 2.0914, 0.0116006, 2.03765, 5.80235)
 Text = "F - Flashlight"
 BottomText = "Don't forget about battery"
 Reusable = false
 
 [node name="Hint3" parent="." instance=ExtResource("5_jshty")]
 transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 4.26221, 0.0116006, 2.03765, -18.8172)
-Text = "Handy keys:"
+Text = "Hotkeys:"
 BottomText = "ESC - Cursor unlock, L - Cursor lock"
+
+[node name="Teleport" parent="." instance=ExtResource("6_kqqc6")]
+transform = Transform3D(2.65, 0, 0, 0, 1, 0, 0, 0, 3.975, 0.248069, 2.03765, 14.7956)
+Scene = "res://scenes/lightning coridor.tscn"
+
+[node name="Flashlight Pickup" parent="." instance=ExtResource("7_art1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.038, 5.836)
