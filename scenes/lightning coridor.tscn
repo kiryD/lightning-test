@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dbgunl0vska6y"]
+[gd_scene load_steps=13 format=3 uid="uid://dbgunl0vska6y"]
 
 [ext_resource type="PackedScene" uid="uid://db1uthkaxx8h7" path="res://scenes/player.tscn" id="1_64yhw"]
 [ext_resource type="PackedScene" uid="uid://oaa2k7mum2rq" path="res://scenes/light.tscn" id="2_b2xjv"]
-[ext_resource type="Texture2D" uid="uid://dqnkfe2s6usp" path="res://grass.jpg" id="3_5cuj4"]
-[ext_resource type="PackedScene" uid="uid://ctt6mij40fsnf" path="res://double_door.tscn" id="4_qvboq"]
+[ext_resource type="Texture2D" uid="uid://dqnkfe2s6usp" path="res://icons/grass.jpg" id="3_5cuj4"]
+[ext_resource type="PackedScene" uid="uid://ctt6mij40fsnf" path="res://scenes/double_door.tscn" id="4_qvboq"]
+[ext_resource type="PackedScene" uid="uid://cbbsbll0bs3ba" path="res://scenes/hint.tscn" id="5_jshty"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6ay65"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -48,7 +49,7 @@ environment = SubResource("Environment_ns8is")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.696517, -0.275241, 0.662651, -0.244674, 0.95926, 0.141263, -0.674536, -0.0637416, -0.735485, 0, 0, 0)
 light_color = Color(0.729412, 0.984314, 0, 1)
-light_energy = 0.05
+light_energy = 0.15
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_64yhw")]
@@ -199,3 +200,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0327206, 1.03765, -14.1039
 
 [node name="DoubleDoor2" parent="." instance=ExtResource("4_qvboq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0327206, 1.03765, 16.8961)
+
+[node name="Hint" parent="." instance=ExtResource("5_jshty")]
+transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 6.237, 0.0116006, 2.03765, -9.48452)
+Text = "Shift - Sprint"
+BottomText = "Your stamina is not the best"
+Reusable = false
+
+[node name="Hint2" parent="." instance=ExtResource("5_jshty")]
+transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 7.42644, 0.0116006, 2.03765, 14.4423)
+Text = "F - Flashlight"
+BottomText = "Don't forget about battery"
+Reusable = false
+
+[node name="Hint3" parent="." instance=ExtResource("5_jshty")]
+transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 4.26221, 0.0116006, 2.03765, -18.8172)
+Text = "Handy keys:"
+BottomText = "ESC - Cursor unlock, L - Cursor lock"

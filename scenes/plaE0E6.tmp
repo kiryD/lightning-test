@@ -6,7 +6,7 @@
 [ext_resource type="Shader" path="res://scripts/postproc.gdshader" id="3_brfmj"]
 [ext_resource type="Script" path="res://scripts/FlashlightControl.gd" id="4_08c7b"]
 [ext_resource type="Script" path="res://scripts/startUI.gd" id="5_iyfv0"]
-[ext_resource type="AudioStream" uid="uid://ccu2ohabyqpjf" path="res://sounds/FIGHTER_SNARE_2.wav" id="7_7q5ne"]
+[ext_resource type="AudioStream" uid="uid://ccu2ohabyqpjf" path="res://FIGHTER_SNARE_2.wav" id="7_7q5ne"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="7_xrkvk"]
 
 [sub_resource type="Curve" id="Curve_i3hnj"]
@@ -173,8 +173,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 630.0
-offset_bottom = 2520.0
+offset_right = 504.0
+offset_bottom = 2016.0
 grow_horizontal = 2
 grow_vertical = 2
 value = 100.0

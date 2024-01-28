@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbbsbll0bs3ba"]
+
+[ext_resource type="Script" path="res://scripts/hint.gd" id="1_2jyvm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2xsok"]
+
+[node name="Hint" type="Area3D"]
+script = ExtResource("1_2jyvm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2xsok")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

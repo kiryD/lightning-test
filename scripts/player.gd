@@ -22,6 +22,9 @@ var mouse_relative_y = 0
 var run
 var step = true
 var exhaust
+var hinta
+var zoom
+signal collide
 @onready var newfov = $Camera3D.fov
 @onready var last_speed = SPEED
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -30,8 +33,19 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta):
-	print(stamina)
+	if $Head/RayCast3D.is_colliding():
+		emit_signal("collide")
 	fov_change(delta)
+	if hinta:
+		$CanvasLayer/Hint/Label.modulate.a = lerp($CanvasLayer/Hint/Label.modulate.a,
+		 1.0, delta * 5)
+		$CanvasLayer/Hint/Label2.modulate.a = lerp($CanvasLayer/Hint/Label.modulate.a,
+		 1.0, delta * 5)
+	else:
+		$CanvasLayer/Hint/Label.modulate.a = lerp($CanvasLayer/Hint/Label.modulate.a,
+		 0.0, delta * 5)
+		$CanvasLayer/Hint/Label2.modulate.a = lerp($CanvasLayer/Hint/Label.modulate.a,
+		 0.0, delta * 5)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -54,20 +68,24 @@ func _physics_process(delta):
 	#run
 	if run and stamina > 0 and !exhaust:
 		SPEED = lerp(SPEED, 5.0, delta)
-		newfov = 90.0
+		if !zoom:
+			newfov = 100.0
 		HEAD_BOB_FREQUENCY = 0.35
 		stamina -= delta * mult_stamina
 		if stamina < 3:
 			exhaust = true
-			SPEED = lerp(SPEED, 1.0, delta*50)
+			SPEED = lerp(SPEED, 0.3, delta*50)
 	else:
 		SPEED = lerp(SPEED, last_speed, delta)
-		newfov = 75.0
+		if !zoom:
+			newfov = 75.0
 		HEAD_BOB_FREQUENCY = 0.2
 		if stamina < max_stamina:
 			stamina += delta * (mult_stamina - between_stand_or_run)
-		if exhaust and stamina > 40:
+		if exhaust and stamina > 70:
 			exhaust = false
+		elif exhaust and !zoom:
+			newfov = 55.0
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "fwd", "back")
@@ -103,6 +121,11 @@ func _input(event):
 		$Head.rotation.x = clamp($Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 		mouse_relative_x = clamp(event.relative.x,-50,50)
 		mouse_relative_y = clamp(event.relative.y,-50,50)
+	if event.is_action_pressed("zoom"):
+		newfov = 30.0
+		zoom = true
+	if event.is_action_released("zoom"):
+		zoom = false
 func head_bob_motion():
 	var pos = Vector3.ZERO
 	pos.y += sin(tick * HEAD_BOB_FREQUENCY) * HEAD_BOB_AMPLITUDE
@@ -121,3 +144,12 @@ func footstep(delay):
 	await get_tree().create_timer(delay).timeout
 	$AudioStreamPlayer3D.playing=true
 	step = true
+func hint(a: String, b: String):
+	hinta = true
+	$CanvasLayer/Hint/Label.text = a
+	$CanvasLayer/Hint/Label2.text = b
+func dehint():
+	hinta = false
+	await get_tree().create_timer(0.3).timeout
+	$CanvasLayer/Hint/Label.text = ""
+	$CanvasLayer/Hint/Label2.text = ""
