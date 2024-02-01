@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://d2e8u6k86vnp2"]
+
+[ext_resource type="Texture2D" uid="uid://haeny6n1ios0" path="res://matres/floor/dispay.jpg" id="1_pju4l"]
+[ext_resource type="Texture2D" uid="uid://sw4r00uhx0i" path="res://matres/floor/ambientOcc.jpg" id="2_14uml"]
+[ext_resource type="Texture2D" uid="uid://cu8u1cnvpaf84" path="res://matres/floor/diffuse.jpg" id="3_eeh04"]
+[ext_resource type="Texture2D" uid="uid://dqv7jgbgitmxi" path="res://matres/floor/normal.jpg" id="4_1tyct"]
+
+[resource]
+albedo_texture = ExtResource("1_pju4l")
+normal_enabled = true
+normal_scale = 0.35
+normal_texture = ExtResource("4_1tyct")
+ao_enabled = true
+ao_texture = ExtResource("2_14uml")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_eeh04")
+uv1_scale = Vector3(15.785, 15.785, 15.785)

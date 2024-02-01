@@ -37,4 +37,5 @@ func _process(delta):
 	
 func _ready():
 	$AnimationPlayer.play("turnoff")
-	$ProgressBar.size = Vector2(63,252)
+	$ProgressBar.set_deferred("size",Vector2(63, 252))
+	#$ProgressBar.size = Vector2(63,252)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://oaa2k7mum2rq"]
+[gd_scene load_steps=7 format=3 uid="uid://oaa2k7mum2rq"]
 
 [ext_resource type="PackedScene" uid="uid://bt7n6bcpb17cy" path="res://scenes/lightessential.glb" id="1_51rbg"]
+[ext_resource type="Script" path="res://scripts/rgb.gd" id="1_85odd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4ha0"]
 emission = Color(1, 1, 0.231373, 1)
@@ -17,6 +18,8 @@ height = 1.0
 [sub_resource type="CylinderMesh" id="CylinderMesh_pk73v"]
 
 [node name="Light" type="Node3D"]
+script = ExtResource("1_85odd")
+energy = 1.4
 
 [node name="RigidBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.13124, 0)
@@ -27,7 +30,7 @@ transform = Transform3D(0.336215, 0, 0, 0, 0.58482, 0, 0, 0, 0.336215, 0, -0.116
 [node name="SpotLight3D" type="SpotLight3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37113e-08, 1, 0, -1, -4.37113e-08, 0, 0.113068, -4.94237e-09)
 spot_range = 4096.0
-spot_angle = 44.86
+spot_angle = 59.4
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(0.15, 0, 0, 0, 0.144, 0, 0, 0, 0.15, 0, 0.0155177, 0)

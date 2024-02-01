@@ -1,7 +1,10 @@
 extends Area3D
 var opened
+@export var locked = false
 #rotates back and with cooldown forward
 func use():
+	if locked:
+		return
 	$AnimationPlayer.play("open")
 	#if opened:
 		#return

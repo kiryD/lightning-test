@@ -28,7 +28,9 @@ var exhaust
 var hinta
 var zoom
 var newfade = 1.0
+var teleporting
 signal collide
+signal notcollide
 @onready var newfov = $Camera3D.fov
 @onready var last_speed = SPEED
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -43,6 +45,13 @@ func _ready():
 func _physics_process(delta):
 	if $Head/RayCast3D.is_colliding():
 		emit_signal("collide")
+		var ray = $Head/RayCast3D
+		if ray.get_collider().locked == true:
+			$CanvasLayer/Cursor/Label.text = "Locked"
+		else:
+			$CanvasLayer/Cursor/Label.text = "E - Use"
+	else:
+		emit_signal("notcollide")
 	fov_change(delta)
 	fade(newfade,delta)
 	if hinta:
@@ -119,8 +128,10 @@ func _input(event):
 		var ray = $Head/RayCast3D
 		ray.get_collider().use()
 	#run conditio
-	if event.is_action_pressed("key_shift") and velocity:
+	if event.is_action_pressed("key_shift") and velocity and !teleporting:
 		run = true
+	elif teleporting:
+		run = false
 	if event.is_action_released("key_shift") or !velocity:
 		run = false
 	#smooth rotation of player(it just works)
@@ -152,7 +163,8 @@ func fov_change(delta):
 func footstep(delay):
 	step = false
 	await get_tree().create_timer(delay).timeout
-	$AudioStreamPlayer3D.playing=true
+	if $AudioStreamPlayer3D.can_process():
+		$AudioStreamPlayer3D.playing=true
 	step = true
 func hint(a: String, b: String):
 	hinta = true
@@ -171,3 +183,6 @@ func fadeout():
 	newfade = 0.0
 func flashlight_pickup():
 	$CanvasLayer/FlashLightSystem.statea = "Enabled"
+func teleport():
+	teleporting = true
+	fadein()

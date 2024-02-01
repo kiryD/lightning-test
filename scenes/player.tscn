@@ -29,17 +29,19 @@ material = SubResource("StandardMaterial3D_1tgd1")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kjnkm"]
 
-[sub_resource type="Gradient" id="Gradient_be4ux"]
-offsets = PackedFloat32Array(0.393443, 0.983607)
-colors = PackedColorArray(0.210685, 0.207559, 9.62615e-08, 1, 0.345788, 0.339449, 2.88785e-07, 1)
+[sub_resource type="Gradient" id="Gradient_cnaqc"]
+offsets = PackedFloat32Array(0, 0.266667, 0.466667, 0.733333, 1)
+colors = PackedColorArray(0.211765, 0.270588, 0.231373, 1, 0.360366, 0.4081, 0.376278, 1, 0.496046, 0.533655, 0.508582, 1, 1, 0.752941, 0.623529, 1, 0.85098, 0.956863, 0.780392, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 15
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_anher"]
-gradient = SubResource("Gradient_be4ux")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0vbrv"]
+gradient = SubResource("Gradient_cnaqc")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jcw1s"]
 shader = ExtResource("3_brfmj")
-shader_parameter/pixel = 1.0
-shader_parameter/pallete = SubResource("GradientTexture2D_anher")
+shader_parameter/pixel = 2.0
+shader_parameter/pallete = SubResource("GradientTexture1D_0vbrv")
 
 [sub_resource type="Animation" id="Animation_uei6r"]
 length = 0.001
@@ -134,7 +136,6 @@ script = ExtResource("2_he2qo")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-visible = false
 modulate = Color(1, 1, 1, 0.384314)
 z_index = -565
 material = SubResource("ShaderMaterial_jcw1s")
@@ -183,8 +184,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1449.0
-offset_bottom = 5796.0
+offset_right = 2394.0
+offset_bottom = 9576.0
 grow_horizontal = 2
 grow_vertical = 2
 value = 100.0
@@ -239,6 +240,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_xrkvk")
 
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/Cursor"]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Cursor"]
 layout_mode = 1
 anchors_preset = 15
@@ -252,12 +267,23 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -32.5
-offset_right = 32.5
-offset_bottom = 28.0
+offset_left = -33.5
+offset_top = 7.0
+offset_right = 33.5
+offset_bottom = 37.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 21
 text = "E - Use"
+
+[node name="ColorRect5" type="ColorRect" parent="CanvasLayer/Cursor/Label"]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.376471)
 
 [node name="Hint" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -297,4 +323,5 @@ volume_db = -23.0
 pitch_scale = 3.25
 
 [connection signal="collide" from="." to="CanvasLayer/Cursor" method="_on_player_collide"]
+[connection signal="notcollide" from="." to="CanvasLayer/Cursor" method="_on_player_notcollide"]
 [connection signal="timeout" from="CanvasLayer/StartUI/Timer" to="CanvasLayer/StartUI" method="_on_timer_timeout"]

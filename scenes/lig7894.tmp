@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dbgunl0vska6y"]
+[gd_scene load_steps=15 format=3 uid="uid://dbgunl0vska6y"]
 
 [ext_resource type="PackedScene" uid="uid://db1uthkaxx8h7" path="res://scenes/player.tscn" id="1_64yhw"]
 [ext_resource type="PackedScene" uid="uid://oaa2k7mum2rq" path="res://scenes/light.tscn" id="2_b2xjv"]
@@ -8,8 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cbbsbll0bs3ba" path="res://scenes/hint.tscn" id="5_jshty"]
 [ext_resource type="PackedScene" uid="uid://okgppx10yudd" path="res://scenes/teleport.tscn" id="6_kqqc6"]
 [ext_resource type="PackedScene" uid="uid://deqogkn03gf60" path="res://scenes/flashlight_pickup.tscn" id="7_art1k"]
-[ext_resource type="PackedScene" uid="uid://db6nh0n4rikxt" path="res://scenes/babaika.tscn" id="9_tur4c"]
-[ext_resource type="PackedScene" uid="uid://bu0ahpv3iwau6" path="res://Tshapeddoubledoorcoridor.tscn" id="10_0fybl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6ay65"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -57,6 +55,27 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_64yhw")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 2.141, -18.23)
+SPEED = null
+JUMP_VELOCITY = null
+mouseSensibility = null
+head_start_pos = null
+HEAD_BOB = null
+HEAD_BOB_FREQUENCY = null
+HEAD_BOB_AMPLITUDE = null
+stamina = null
+max_stamina = null
+mult_stamina = null
+between_stand_or_run = null
+have_flashlight = null
+
+[node name="Light" parent="." instance=ExtResource("2_b2xjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0532485, 5.28175, -9.02456)
+
+[node name="Light2" parent="." instance=ExtResource("2_b2xjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0532485, 5.28175, 4.97544)
+
+[node name="Light3" parent="." instance=ExtResource("2_b2xjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0532485, 5.28175, 18.9754)
 
 [node name="StaticBody3D7" type="StaticBody3D" parent="."]
 transform = Transform3D(122.357, 0, 0, 0, 0.19725, 0, 0, 0, 87.0922, 14.0545, 0.939023, -1.59109)
@@ -69,29 +88,17 @@ mesh = SubResource("BoxMesh_et54v")
 shape = SubResource("BoxShape3D_b31xh")
 
 [node name="ENV" parent="." instance=ExtResource("4_2lbdg")]
-process_mode = 4
-visible = false
 
 [node name="DoubleDoor" parent="." instance=ExtResource("4_qvboq")]
-process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0327206, 1.03765, -14.1039)
-visible = false
 
 [node name="DoubleDoor2" parent="." instance=ExtResource("4_qvboq")]
-process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0327206, 1.03765, 16.8961)
-visible = false
 
 [node name="Hint" parent="." instance=ExtResource("5_jshty")]
 transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 6.237, 0.0116006, 2.03765, -9.48452)
 Text = "Shift - Sprint"
 BottomText = "Your stamina is not the best"
-Reusable = false
-
-[node name="Hint4" parent="." instance=ExtResource("5_jshty")]
-transform = Transform3D(2.80635, 0, 0, 0, 1, 0, 0, 0, 2.26805, 0.0116006, 2.03765, -0.00166512)
-Text = "Right mouse buttom - Zoom"
-BottomText = "Overrides current effect, zooms in/out"
 Reusable = false
 
 [node name="Hint2" parent="." instance=ExtResource("5_jshty")]
@@ -106,20 +113,8 @@ Text = "Hotkeys:"
 BottomText = "ESC - Cursor unlock, L - Cursor lock"
 
 [node name="Teleport" parent="." instance=ExtResource("6_kqqc6")]
-transform = Transform3D(2.65, 0, 0, 0, 1, 0, 0, 0, 3.975, -3.52777, 2.03765, -3.33811)
+transform = Transform3D(2.65, 0, 0, 0, 1, 0, 0, 0, 3.975, 0.248069, 2.03765, 14.7956)
 Scene = "res://scenes/lightning coridor.tscn"
 
 [node name="Flashlight Pickup" parent="." instance=ExtResource("7_art1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.038, 5.836)
-
-[node name="Area3D" parent="." instance=ExtResource("9_tur4c")]
-transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, 0.0944266, 1.69648, 18.7043)
-
-[node name="TDoubleDoorCoridor" parent="." instance=ExtResource("10_0fybl")]
-
-[node name="DoubleDoor3" parent="." instance=ExtResource("4_qvboq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0246534, 1.03765, 17.0753)
-locked = true
-
-[node name="Light" parent="." instance=ExtResource("2_b2xjv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0167771, 5.4759, 16.2316)
